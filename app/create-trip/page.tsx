@@ -78,6 +78,8 @@ export default function CreateTrip() {
             budget,
             interests:selectedInterests,
             pace,
+            accommodation,
+            transportation,
         });
     }
     const [step,setStep] = useState(1);
@@ -248,6 +250,7 @@ export default function CreateTrip() {
                                             htmlFor={id}
                                             className="flex cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition-colors hover:border-sky-300 hover:bg-sky-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-sky-600 dark:hover:bg-sky-950/30"
                                         >
+                                            
                                             <input
                                                 type="checkbox"
                                                 id={id}
@@ -327,7 +330,45 @@ export default function CreateTrip() {
                         </fieldset>
                         </>
                         )}
-                        <div className="pt-2">
+
+{step === 3 && (
+    <fieldset className="space-y-4">
+        <legend className="text-lg font-medium text-zinc-900 dark:text-zinc-50">
+            Accommodation
+        </legend>
+
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            Where would you like to stay?
+        </p>
+
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {accommodations.map(({ value, label }) => {
+                const id = `accommodation-${value}`;
+
+                return (
+                    <label
+                        key={value}
+                        htmlFor={id}
+                        className="flex cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 px-4 py-3 text-sm text-zinc-700 transition-colors hover:border-sky-300 hover:bg-sky-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-sky-600 dark:hover:bg-sky-950/30"
+                    >
+                        <input
+                            type="radio"
+                            id={id}
+                            name="accommodation"
+                            value={value}
+                            checked={accommodation === value}
+                            onChange={(e) => setAccommodation(e.target.value)}
+                            className="h-4 w-4 border-zinc-300 text-sky-600 focus:ring-sky-500 dark:border-zinc-600 dark:bg-zinc-800"
+                        />
+
+                        {label}
+                    </label>
+                );
+            })}
+        </div>
+    </fieldset>
+)}
+                        <div className="pt-2"> 
                         {step === 1 &&(
 
                       
@@ -358,6 +399,63 @@ export default function CreateTrip() {
                                 </button>
 
                               )}
+
+                              {step === 4 && (
+                                <div className="space-y-6">
+                                    <div>
+                                        <h2 className="text-lg font-medium text-zinc-900 dark:text-zinc-50">
+                                            Review your trip
+                                        </h2>
+                                        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                                            Please review the details of your trip.
+                                        </p>
+                                    </div>
+
+                                    <div className="space-y-4 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-800">
+                                        <div>
+                                            <p className="text-sm text-zinc-500">Destination</p>
+                                            <p className="font-medium">{destination}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-zinc-500">Dates</p>
+                                            <p className="font-medium">
+                                                {startDate} - {endDate}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-zinc-500">Travelers</p>
+                                            <p className="font-medium">{travelers}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-zinc-500">Budget</p>
+                                            <p className="font-medium">${budget}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-zinc-500">Interests</p>
+                                            <p className="font-medium">{selectedInterests.join(", ")}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-zinc-500">Travel pace</p>
+                                            <p className="font-medium">{pace}</p>
+                                        </div>
+                                        <div> 
+                                            <p className="text-sm text-zinc-500">Transportation</p>
+                                            <p className="font-medium">
+                                                {transportations.find((item) => item.value === transportation)?.label}
+                                            </p>
+
+                                             </div>
+                                             <button 
+                                             type="submit"
+                                             className="w-full rounded-full bg-sky-600 px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-600 sm:w-auto"
+
+                                             >
+                                                Create Trip
+                                             </button>
+                                    </div>
+                                </div>
+                              )}
+                            
                         </div>
                     </div>
                 </form>
